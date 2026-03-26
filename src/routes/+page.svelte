@@ -1,11 +1,10 @@
 <script lang="ts">
 	import Canvas3D from '$lib/components/canvas/Canvas3D.svelte';
+	import Toolbar from '$lib/components/ui/Toolbar.svelte';
 </script>
 
 <div class="app-layout">
-	<header class="toolbar">
-		<span class="toolbar-title">Axon</span>
-	</header>
+	<Toolbar />
 
 	<main class="viewport">
 		<div class="canvas-area">
@@ -22,23 +21,6 @@
 		height: 100vh;
 		width: 100vw;
 		overflow: hidden;
-	}
-
-	.toolbar {
-		height: 48px;
-		display: flex;
-		align-items: center;
-		padding: 0 16px;
-		background-color: #1e293b;
-		border-bottom: 1px solid #334155;
-		flex-shrink: 0;
-	}
-
-	.toolbar-title {
-		font-family: 'Space Grotesk', sans-serif;
-		font-size: 1.125rem;
-		font-weight: 700;
-		color: #f8fafc;
 	}
 
 	.viewport {
