@@ -2,6 +2,7 @@
 	import LensSelector from './LensSelector.svelte';
 	import SettingsPanel from './SettingsPanel.svelte';
 	import CameraPresets from './CameraPresets.svelte';
+	import FlattenToggle from './FlattenToggle.svelte';
 
 	interface Props {
 		children?: import('svelte').Snippet;
@@ -24,6 +25,7 @@
 	</div>
 
 	<div class="toolbar-right">
+		<FlattenToggle />
 		<CameraPresets />
 		<button
 			class="btn btn-sm variant-ghost-surface settings-btn"
