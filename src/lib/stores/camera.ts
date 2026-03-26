@@ -1,4 +1,5 @@
-import { writable } from 'svelte/store';
+import { writable, get } from 'svelte/store';
+import { Vector3 } from 'three';
 import type { OrbitControls } from 'three/examples/jsm/controls/OrbitControls.js';
 import type { PerspectiveCamera } from 'three';
 
@@ -30,10 +31,51 @@ export function clearPreset(): void {
 	cameraState.update((s) => ({ ...s, activePreset: null }));
 }
 
-/** Placeholder for programmatic camera animation (used by presets and flatten toggle). */
-export function setCameraPosition(
-	_position: [number, number, number],
-	_target: [number, number, number]
+let animationFrameId: number | null = null;
+
+/** Smoothly animate camera position and OrbitControls target over the given duration. */
+export function animateCameraTo(
+	position: [number, number, number],
+	target: [number, number, number],
+	duration = 800
 ): void {
-	// Will be implemented when camera presets / flatten toggle are built.
+	const maybeCam = get(cameraRef);
+	const maybeCtl = get(orbitControlsRef);
+	if (!maybeCam || !maybeCtl) return;
+	const cam: PerspectiveCamera = maybeCam;
+	const ctl: OrbitControls = maybeCtl;
+
+	// Cancel any in-flight animation
+	if (animationFrameId !== null) {
+		cancelAnimationFrame(animationFrameId);
+		animationFrameId = null;
+	}
+
+	const startPos = cam.position.clone();
+	const startTarget = ctl.target.clone();
+	const endPos = new Vector3(...position);
+	const endTarget = new Vector3(...target);
+	const startTime = performance.now();
+
+	function easeInOutCubic(t: number): number {
+		return t < 0.5 ? 4 * t * t * t : 1 - Math.pow(-2 * t + 2, 3) / 2;
+	}
+
+	function tick(): void {
+		const elapsed = performance.now() - startTime;
+		const raw = Math.min(elapsed / duration, 1);
+		const t = easeInOutCubic(raw);
+
+		cam.position.lerpVectors(startPos, endPos, t);
+		ctl.target.lerpVectors(startTarget, endTarget, t);
+		ctl.update();
+
+		if (raw < 1) {
+			animationFrameId = requestAnimationFrame(tick);
+		} else {
+			animationFrameId = null;
+		}
+	}
+
+	animationFrameId = requestAnimationFrame(tick);
 }
