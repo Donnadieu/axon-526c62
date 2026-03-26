@@ -9,3 +9,8 @@ export interface Task {
 	fun?: number;
 	friction?: number;
 }
+
+export interface NonTaskBlock {
+	content: string;
+	position: number;
+}
