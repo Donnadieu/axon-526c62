@@ -1,0 +1,10 @@
+services:
+  app:
+    build: .
+    ports:
+      - "3000:80"
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:80/api/health/index.json"]
+      interval: 10s
+      timeout: 5s
+      retries: 3
