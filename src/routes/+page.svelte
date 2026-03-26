@@ -1,6 +1,8 @@
 <script lang="ts">
 	import Canvas3D from '$lib/components/canvas/Canvas3D.svelte';
 	import Toolbar from '$lib/components/ui/Toolbar.svelte';
+	import Inspector from '$lib/components/ui/Inspector.svelte';
+	import { selectedTask } from '$lib/stores/tasks';
 </script>
 
 <div class="app-layout">
@@ -10,7 +12,9 @@
 		<div class="canvas-area">
 			<Canvas3D />
 		</div>
-		<aside class="inspector-panel"></aside>
+		<aside class="inspector-panel" class:open={$selectedTask !== null}>
+			<Inspector />
+		</aside>
 	</main>
 </div>
 
@@ -40,5 +44,10 @@
 		background-color: #1e293b;
 		border-left: 1px solid #334155;
 		transition: width 0.2s ease;
+		overflow: hidden;
+	}
+
+	.inspector-panel.open {
+		width: 320px;
 	}
 </style>

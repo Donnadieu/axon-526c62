@@ -96,6 +96,7 @@
 
 	function handleClick(e: IntersectionEvent<MouseEvent>) {
 		e.stopPropagation();
+		e.nativeEvent.stopPropagation();
 		selectedTaskId.set(task.id);
 	}
 
