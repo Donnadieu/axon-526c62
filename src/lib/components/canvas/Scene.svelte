@@ -2,10 +2,12 @@
 	import { T } from '@threlte/core';
 	import { useThrelte } from '@threlte/core';
 	import * as THREE from 'three';
-	import { OrbitControls } from '@threlte/extras';
+	import { OrbitControls, interactivity } from '@threlte/extras';
 
 	const { scene } = useThrelte();
 	scene.background = new THREE.Color('#0F172A');
+
+	interactivity();
 </script>
 
 <T.PerspectiveCamera makeDefault position={[15, 15, 15]} fov={50}>

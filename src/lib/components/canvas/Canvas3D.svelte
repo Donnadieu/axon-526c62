@@ -3,6 +3,7 @@
 	import GridRenderer from './GridRenderer.svelte';
 	import AxisLabels from './AxisLabels.svelte';
 	import Scene from './Scene.svelte';
+	import TaskSpheres from './TaskSpheres.svelte';
 </script>
 
 <div class="canvas-wrapper">
@@ -10,6 +11,7 @@
 		<Scene />
 		<GridRenderer />
 		<AxisLabels />
+		<TaskSpheres />
 	</Canvas>
 </div>
 
