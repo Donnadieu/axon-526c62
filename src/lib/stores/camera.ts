@@ -19,6 +19,14 @@ export const orbitControlsRef = writable<OrbitControls | undefined>(undefined);
 /** Reference to the active PerspectiveCamera instance. */
 export const cameraRef = writable<PerspectiveCamera | undefined>(undefined);
 
+/** Default 3D camera position and target. */
+export const DEFAULT_3D_POSITION: [number, number, number] = [15, 15, 15];
+export const DEFAULT_3D_TARGET: [number, number, number] = [5.5, 5.5, 5];
+
+/** 2D front-facing camera position and target (looking straight down z-axis at xy plane). */
+export const FLAT_2D_POSITION: [number, number, number] = [5.5, 5.5, -15];
+export const FLAT_2D_TARGET: [number, number, number] = [5.5, 5.5, 5];
+
 export function toggleFlatten(): void {
 	cameraState.update((s) => ({ ...s, is2D: !s.is2D }));
 }
