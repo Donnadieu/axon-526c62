@@ -4,9 +4,15 @@
 	import AxisLabels from './AxisLabels.svelte';
 	import Scene from './Scene.svelte';
 	import TaskSpheres from './TaskSpheres.svelte';
+	import { selectedTaskId } from '$lib/stores/tasks';
+
+	function handleCanvasClick() {
+		selectedTaskId.set(null);
+	}
 </script>
 
-<div class="canvas-wrapper">
+<!-- svelte-ignore a11y_no_static_element_interactions a11y_click_events_have_key_events -->
+<div class="canvas-wrapper" onclick={handleCanvasClick}>
 	<Canvas>
 		<Scene />
 		<GridRenderer />
