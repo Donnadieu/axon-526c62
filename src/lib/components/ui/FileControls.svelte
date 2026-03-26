@@ -7,6 +7,11 @@
 		reopenHandle,
 		saveFile
 	} from '$lib/filesystem/file-access';
+	import {
+		loadStoredHandle,
+		storeHandle
+	} from '$lib/filesystem/handle-store';
+	import { fileHandle as fileHandleStore } from '$lib/stores/tasks';
 	import FallbackImportExport from './FallbackImportExport.svelte';
 
 	interface Props {
@@ -19,7 +24,7 @@
 
 	let supported = $state(false);
 	let fileName = $state('');
-	let fileHandle = $state<FileSystemFileHandle | null>(null);
+	let currentHandle = $state<FileSystemFileHandle | null>(null);
 
 	onMount(async () => {
 		supported = isFileSystemAccessSupported();
@@ -29,7 +34,7 @@
 		if (storedHandle) {
 			const result = await reopenHandle(storedHandle);
 			if (result.ok) {
-				registerSave(storedHandle);
+				registerHandle(storedHandle);
 				onFileLoaded(result.value);
 				return;
 			}
@@ -37,7 +42,7 @@
 
 		const created = await createDefaultFile();
 		if (created.ok) {
-			registerSave(created.value.handle);
+			registerHandle(created.value.handle);
 			storeHandle(created.value.handle);
 			onFileLoaded(created.value.content);
 		}
@@ -46,33 +51,23 @@
 	async function handleOpen() {
 		const result = await openFile();
 		if (result.ok) {
-			registerSave(result.value.handle);
+			registerHandle(result.value.handle);
 			storeHandle(result.value.handle);
 			onFileLoaded(result.value.content);
 		}
 	}
 
 	async function save() {
-		if (fileHandle) {
-			await saveFile(fileHandle, getContent());
+		if (currentHandle) {
+			await saveFile(currentHandle, getContent());
 		}
 	}
 
-	function registerSave(handle: FileSystemFileHandle) {
-		fileHandle = handle;
+	function registerHandle(handle: FileSystemFileHandle) {
+		currentHandle = handle;
 		fileName = handle.name;
+		fileHandleStore.set(handle);
 		onSaveReady?.(save);
-	}
-
-	async function loadStoredHandle(): Promise<FileSystemFileHandle | null> {
-		// FileSystemFileHandle cannot be serialized to localStorage.
-		// In a full implementation, this would use IndexedDB via idb-keyval.
-		// For now, handle persistence is session-only.
-		return null;
-	}
-
-	function storeHandle(_handle: FileSystemFileHandle): void {
-		// Placeholder for IndexedDB-based handle storage.
 	}
 </script>
 
