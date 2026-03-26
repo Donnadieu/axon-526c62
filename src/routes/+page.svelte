@@ -1,12 +1,25 @@
 <script lang="ts">
+	import { get } from 'svelte/store';
 	import Canvas3D from '$lib/components/canvas/Canvas3D.svelte';
 	import Toolbar from '$lib/components/ui/Toolbar.svelte';
 	import Inspector from '$lib/components/ui/Inspector.svelte';
-	import { selectedTask } from '$lib/stores/tasks';
+	import FileControls from '$lib/components/ui/FileControls.svelte';
+	import { selectedTask, tasks, nonTaskContent, loadFromMarkdown } from '$lib/stores/tasks';
+	import { serializeTasks } from '$lib/parser/markdown-serializer';
+
+	function handleFileLoaded(content: string) {
+		loadFromMarkdown(content);
+	}
+
+	function getContent(): string {
+		return serializeTasks(get(tasks), get(nonTaskContent));
+	}
 </script>
 
 <div class="app-layout">
-	<Toolbar />
+	<Toolbar>
+		<FileControls onFileLoaded={handleFileLoaded} {getContent} />
+	</Toolbar>
 
 	<main class="viewport">
 		<div class="canvas-area">

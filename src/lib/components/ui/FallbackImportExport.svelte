@@ -1,5 +1,6 @@
 <script lang="ts">
 	import { importFile, exportFile } from '$lib/filesystem/fallback';
+	import { isDirty } from '$lib/stores/tasks';
 
 	interface Props {
 		onImport: (content: string) => void;
@@ -17,6 +18,7 @@
 		try {
 			const content = await importFile();
 			onImport(content);
+			isDirty.set(false);
 		} catch (err) {
 			if (err instanceof Error && err.message !== 'File selection cancelled') {
 				error = err.message;
@@ -28,13 +30,20 @@
 
 	function handleExport() {
 		exportFile(getContent());
+		isDirty.set(false);
 	}
 </script>
 
 <div class="flex flex-col gap-3">
-	<div class="rounded-lg border border-amber-500/30 bg-amber-500/10 px-4 py-3 text-sm text-amber-200">
-		Changes are in-memory only. Export to save your work.
-	</div>
+	{#if $isDirty}
+		<div class="rounded-lg border border-red-500/50 bg-red-500/15 px-4 py-3 text-sm text-red-200">
+			You have unsaved changes! Export now to avoid losing your work.
+		</div>
+	{:else}
+		<div class="rounded-lg border border-amber-500/30 bg-amber-500/10 px-4 py-3 text-sm text-amber-200">
+			Your browser doesn't support direct file access. Changes are in-memory only — use Export to save.
+		</div>
+	{/if}
 
 	<div class="flex gap-2">
 		<button
