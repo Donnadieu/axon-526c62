@@ -190,7 +190,7 @@
 
 	{#if showDeleteConfirm}
 		<ConfirmDialog
-			message="Are you sure you want to permanently delete this task?"
+			message="Permanently delete this task? This cannot be undone."
 			onConfirm={handleDeleteConfirm}
 			onCancel={() => { showDeleteConfirm = false; }}
 		/>
