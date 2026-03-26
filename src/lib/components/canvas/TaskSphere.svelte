@@ -2,6 +2,7 @@
 	import { T } from '@threlte/core';
 	import type { Task } from '$lib/types/task';
 	import { selectedTaskId } from '$lib/stores/tasks';
+	import type { IntersectionEvent } from '@threlte/extras';
 
 	interface Props {
 		task: Task;
@@ -21,7 +22,8 @@
 	let emissive = $derived(hovered || isSelected ? HOVER_EMISSIVE : 0x000000);
 	let emissiveIntensity = $derived(isSelected ? 0.6 : hovered ? 0.3 : 0);
 
-	function handleClick() {
+	function handleClick(e: IntersectionEvent<MouseEvent>) {
+		e.stopPropagation();
 		selectedTaskId.set(task.id);
 	}
 
