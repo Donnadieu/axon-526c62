@@ -8,6 +8,33 @@ declare global {
 		// interface PageState {}
 		// interface Platform {}
 	}
+
+	interface FileSystemFileHandle {
+		queryPermission(descriptor?: { mode?: 'read' | 'readwrite' }): Promise<PermissionState>;
+		requestPermission(descriptor?: { mode?: 'read' | 'readwrite' }): Promise<PermissionState>;
+	}
+
+	interface Window {
+		showOpenFilePicker(options?: OpenFilePickerOptions): Promise<FileSystemFileHandle[]>;
+		showSaveFilePicker(options?: SaveFilePickerOptions): Promise<FileSystemFileHandle>;
+	}
+
+	interface OpenFilePickerOptions {
+		types?: FilePickerAcceptType[];
+		multiple?: boolean;
+		excludeAcceptAllOption?: boolean;
+	}
+
+	interface SaveFilePickerOptions {
+		suggestedName?: string;
+		types?: FilePickerAcceptType[];
+		excludeAcceptAllOption?: boolean;
+	}
+
+	interface FilePickerAcceptType {
+		description?: string;
+		accept: Record<string, string[]>;
+	}
 }
 
 export {};
