@@ -1,11 +1,13 @@
 <script lang="ts">
 	import LensSelector from './LensSelector.svelte';
+	import SettingsPanel from './SettingsPanel.svelte';
 
 	interface Props {
 		children?: import('svelte').Snippet;
 	}
 
 	let { children }: Props = $props();
+	let settingsOpen = $state(false);
 </script>
 
 <header class="toolbar">
@@ -21,7 +23,17 @@
 	</div>
 
 	<div class="toolbar-right">
-		<!-- Placeholders for FlattenToggle and CameraPresets -->
+		<button
+			class="btn btn-sm variant-ghost-surface settings-btn"
+			onclick={() => (settingsOpen = !settingsOpen)}
+			aria-label="Settings"
+			aria-expanded={settingsOpen}
+		>
+			&#9881;
+		</button>
+		{#if settingsOpen}
+			<SettingsPanel onclose={() => (settingsOpen = false)} />
+		{/if}
 	</div>
 </header>
 
@@ -62,5 +74,21 @@
 		gap: 8px;
 		flex: 1;
 		justify-content: flex-end;
+	}
+
+	.settings-btn {
+		background: none;
+		border: none;
+		color: #94a3b8;
+		font-size: 1.25rem;
+		cursor: pointer;
+		padding: 4px 8px;
+		border-radius: 4px;
+		transition: color 0.15s ease, background-color 0.15s ease;
+	}
+
+	.settings-btn:hover {
+		color: #f8fafc;
+		background-color: #334155;
 	}
 </style>
