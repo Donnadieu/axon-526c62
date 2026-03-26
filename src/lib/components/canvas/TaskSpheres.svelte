@@ -2,6 +2,7 @@
 	import { openTasks, selectedTaskId } from '$lib/stores/tasks';
 	import { preferences } from '$lib/stores/preferences';
 	import { computeZPosition, computeStackedZPosition, groupTasksByCell } from '$lib/utils/lens';
+	import { getDueDateStatus, type DueDateStatus } from '$lib/utils/due-date';
 	import TaskSphere from './TaskSphere.svelte';
 
 	const tasks = $derived($openTasks);
@@ -11,6 +12,7 @@
 		taskId: string;
 		task: (typeof tasks)[number];
 		position: [number, number, number];
+		dueDateStatus: DueDateStatus;
 	}
 
 	const sphereEntries: SphereEntry[] = $derived.by(() => {
@@ -25,7 +27,8 @@
 				entries.push({
 					taskId: task.id,
 					task,
-					position: [task.importance, task.urgency, z]
+					position: [task.importance, task.urgency, z],
+					dueDateStatus: getDueDateStatus(task)
 				});
 			}
 		}
@@ -35,5 +38,5 @@
 </script>
 
 {#each sphereEntries as entry (entry.taskId)}
-	<TaskSphere task={entry.task} position={entry.position} isSelected={$selectedTaskId === entry.taskId} />
+	<TaskSphere task={entry.task} position={entry.position} isSelected={$selectedTaskId === entry.taskId} dueDateStatus={entry.dueDateStatus} />
 {/each}
