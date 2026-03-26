@@ -38,5 +38,10 @@
 </script>
 
 {#each sphereEntries as entry (entry.taskId)}
-	<TaskSphere task={entry.task} position={entry.position} isSelected={$selectedTaskId === entry.taskId} dueDateStatus={entry.dueDateStatus} />
+	<TaskSphere
+		task={entry.task}
+		targetPosition={entry.position}
+		isSelected={$selectedTaskId === entry.taskId}
+		dueDateStatus={entry.dueDateStatus}
+	/>
 {/each}

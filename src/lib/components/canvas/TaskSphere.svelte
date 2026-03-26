@@ -7,17 +7,18 @@
 
 	interface Props {
 		task: Task;
-		position: [number, number, number];
+		targetPosition: [number, number, number];
 		isSelected: boolean;
 		dueDateStatus: DueDateStatus;
 	}
 
-	const { task, position, isSelected, dueDateStatus }: Props = $props();
+	const { task, targetPosition, isSelected, dueDateStatus }: Props = $props();
 
 	const PRIMARY_COLOR = 0x6d28d9;
 	const SELECTED_COLOR = 0x8b5cf6;
 	const WARNING_COLOR = 0xf59e0b;
 	const OVERDUE_COLOR = 0xef4444;
+	const LERP_SPEED = 6; // ~500ms to reach target (1 - e^(-6*0.5) ~ 0.95)
 
 	let hovered = $state(false);
 	let pulseElapsed = $state(0);
@@ -50,12 +51,48 @@
 		return 0;
 	});
 
+	// Overdue pulse animation
 	useTask(
 		(delta) => {
 			pulseElapsed += delta;
 		},
 		{ running: () => dueDateStatus === 'overdue' }
 	);
+
+	// Position animation state
+	let currentPos = $state({ x: targetPosition[0], y: targetPosition[1], z: targetPosition[2] });
+
+	const SNAP_THRESHOLD = 0.001;
+
+	let animating = $state(true);
+
+	useTask(
+		(delta) => {
+			const t = 1 - Math.exp(-LERP_SPEED * delta);
+			const dx = targetPosition[0] - currentPos.x;
+			const dy = targetPosition[1] - currentPos.y;
+			const dz = targetPosition[2] - currentPos.z;
+
+			if (Math.abs(dx) < SNAP_THRESHOLD && Math.abs(dy) < SNAP_THRESHOLD && Math.abs(dz) < SNAP_THRESHOLD) {
+				currentPos.x = targetPosition[0];
+				currentPos.y = targetPosition[1];
+				currentPos.z = targetPosition[2];
+				animating = false;
+				return;
+			}
+
+			currentPos.x += dx * t;
+			currentPos.y += dy * t;
+			currentPos.z += dz * t;
+		},
+		{ running: () => animating }
+	);
+
+	$effect(() => {
+		// Re-trigger animation when target changes
+		void targetPosition;
+		animating = true;
+	});
 
 	function handleClick(e: IntersectionEvent<MouseEvent>) {
 		e.stopPropagation();
@@ -74,9 +111,9 @@
 </script>
 
 <T.Mesh
-	position.x={position[0]}
-	position.y={position[1]}
-	position.z={position[2]}
+	position.x={currentPos.x}
+	position.y={currentPos.y}
+	position.z={currentPos.z}
 	scale.x={scale}
 	scale.y={scale}
 	scale.z={scale}
