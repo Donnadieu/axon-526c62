@@ -1,5 +1,11 @@
 import { describe, it, expect, vi, afterEach } from 'vitest';
-import { clamp, parseDateYYMMDD, daysSince, computeStaleness } from '../../src/lib/utils/staleness';
+import {
+	clamp,
+	parseDateYYMMDD,
+	daysSince,
+	computeStaleness,
+	todayYYMMDD
+} from '../../src/lib/utils/staleness';
 
 describe('clamp', () => {
 	it('returns value when within range', () => {
@@ -60,6 +66,29 @@ describe('daysSince', () => {
 
 	it('returns 0 for invalid date string', () => {
 		expect(daysSince('invalid')).toBe(0);
+	});
+});
+
+describe('todayYYMMDD', () => {
+	afterEach(() => {
+		vi.useRealTimers();
+	});
+
+	it('returns correct YYMMDD format for a known date', () => {
+		vi.useFakeTimers();
+		vi.setSystemTime(new Date(2026, 2, 26)); // March 26, 2026
+		expect(todayYYMMDD()).toBe('260326');
+	});
+
+	it('pads single-digit month and day with zeros', () => {
+		vi.useFakeTimers();
+		vi.setSystemTime(new Date(2026, 0, 5)); // January 5, 2026
+		expect(todayYYMMDD()).toBe('260105');
+	});
+
+	it('returns a 6-character string matching YYMMDD pattern', () => {
+		const result = todayYYMMDD();
+		expect(result).toMatch(/^\d{6}$/);
 	});
 });
 

@@ -37,3 +37,11 @@ export function daysSince(dateStr: string): number {
 export function computeStaleness(createdDate: string, stalenessWindow: number): number {
 	return clamp((daysSince(createdDate) / stalenessWindow) * 10, 0, 10);
 }
+
+export function todayYYMMDD(): string {
+	const now = new Date();
+	const yy = String(now.getFullYear() - 2000).padStart(2, '0');
+	const mm = String(now.getMonth() + 1).padStart(2, '0');
+	const dd = String(now.getDate()).padStart(2, '0');
+	return `${yy}${mm}${dd}`;
+}

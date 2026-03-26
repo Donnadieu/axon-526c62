@@ -4,6 +4,7 @@
 	import AxisLabels from './AxisLabels.svelte';
 	import Scene from './Scene.svelte';
 	import TaskSpheres from './TaskSpheres.svelte';
+	import GridPlane from './GridPlane.svelte';
 	import { selectedTaskId } from '$lib/stores/tasks';
 
 	function handleCanvasClick() {
@@ -18,6 +19,7 @@
 		<GridRenderer />
 		<AxisLabels />
 		<TaskSpheres />
+		<GridPlane />
 	</Canvas>
 </div>
 
