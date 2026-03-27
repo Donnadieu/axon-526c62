@@ -50,6 +50,8 @@
 		background-color: #1e293b;
 		border-bottom: 1px solid #334155;
 		flex-shrink: 0;
+		position: relative;
+		z-index: 10;
 	}
 
 	.toolbar-left {
@@ -57,6 +59,7 @@
 		align-items: center;
 		gap: 12px;
 		flex: 1;
+		overflow: visible;
 	}
 
 	.toolbar-title {

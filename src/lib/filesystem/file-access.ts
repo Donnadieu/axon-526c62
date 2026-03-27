@@ -19,7 +19,7 @@ const DEFAULT_TEMPLATE = `# Axon Tasks
 `;
 
 export function isFileSystemAccessSupported(): boolean {
-	return typeof window !== 'undefined' && 'showOpenFilePicker' in window;
+	return typeof window !== 'undefined' && typeof window.showOpenFilePicker === 'function';
 }
 
 function classifyError(err: unknown): FileAccessError {

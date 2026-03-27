@@ -7,6 +7,7 @@
 
 	function handleClick(e: IntersectionEvent<MouseEvent>) {
 		e.stopPropagation();
+		e.nativeEvent.stopPropagation();
 
 		const point = e.point;
 		const importance = clamp(Math.round(point.x), 1, 10);

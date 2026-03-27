@@ -1,10 +1,20 @@
 <script lang="ts">
 	import { get } from 'svelte/store';
+	import { browser } from '$app/environment';
 	import Canvas3D from '$lib/components/canvas/Canvas3D.svelte';
 	import Toolbar from '$lib/components/ui/Toolbar.svelte';
 	import Inspector from '$lib/components/ui/Inspector.svelte';
 	import FileControls from '$lib/components/ui/FileControls.svelte';
-	import { selectedTask, tasks, nonTaskContent, loadFromMarkdown } from '$lib/stores/tasks';
+	import {
+		selectedTask,
+		selectedTaskId,
+		tasks,
+		nonTaskContent,
+		loadFromMarkdown,
+		addTask,
+		completeTask,
+		deleteTask
+	} from '$lib/stores/tasks';
 	import { serializeTasks } from '$lib/parser/markdown-serializer';
 
 	function handleFileLoaded(content: string) {
@@ -13,6 +23,18 @@
 
 	function getContent(): string {
 		return serializeTasks(get(tasks), get(nonTaskContent));
+	}
+
+	if (browser && (window as any).__AXON_E2E__) {
+		(window as any).__axon = {
+			addTask,
+			completeTask,
+			deleteTask,
+			selectTask: (id: string) => selectedTaskId.set(id),
+			deselectTask: () => selectedTaskId.set(null),
+			getTasks: () => get(tasks),
+			getOpenTasks: () => get(tasks).filter((t) => t.status === 'open')
+		};
 	}
 </script>
 
