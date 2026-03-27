@@ -37,7 +37,7 @@
 	.preset-group {
 		display: flex;
 		gap: 2px;
-		background-color: #0f172a;
+		background-color: var(--axon-background);
 		border-radius: 6px;
 		padding: 2px;
 	}
@@ -53,17 +53,17 @@
 		transition:
 			background-color 0.15s ease,
 			color 0.15s ease;
-		color: #94a3b8;
+		color: var(--axon-text-secondary);
 		background-color: transparent;
 	}
 
 	.preset-btn:hover:not(.active) {
-		color: #cbd5e1;
-		background-color: #1e293b;
+		color: var(--axon-text-subtle);
+		background-color: var(--axon-secondary);
 	}
 
 	.preset-btn.active {
-		color: #f8fafc;
-		background-color: #6d28d9;
+		color: var(--axon-foreground);
+		background-color: var(--axon-primary);
 	}
 </style>

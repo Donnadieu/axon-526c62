@@ -63,8 +63,8 @@
 		top: 48px;
 		right: 16px;
 		width: 300px;
-		background-color: #1e293b;
-		border: 1px solid #334155;
+		background-color: var(--axon-secondary);
+		border: 1px solid var(--axon-muted);
 		border-radius: 8px;
 		box-shadow: 0 8px 24px rgba(0, 0, 0, 0.4);
 		z-index: 100;
@@ -75,21 +75,21 @@
 		align-items: center;
 		justify-content: space-between;
 		padding: 12px 16px;
-		border-bottom: 1px solid #334155;
+		border-bottom: 1px solid var(--axon-muted);
 	}
 
 	.settings-title {
 		font-family: 'Space Grotesk', sans-serif;
 		font-size: 0.875rem;
 		font-weight: 600;
-		color: #f8fafc;
+		color: var(--axon-foreground);
 		margin: 0;
 	}
 
 	.settings-close {
 		background: none;
 		border: none;
-		color: #94a3b8;
+		color: var(--axon-text-secondary);
 		font-size: 1.25rem;
 		cursor: pointer;
 		padding: 0 4px;
@@ -97,7 +97,7 @@
 	}
 
 	.settings-close:hover {
-		color: #f8fafc;
+		color: var(--axon-foreground);
 	}
 
 	.settings-body {
@@ -116,18 +116,18 @@
 		justify-content: space-between;
 		font-size: 0.8125rem;
 		font-weight: 500;
-		color: #cbd5e1;
+		color: var(--axon-text-subtle);
 	}
 
 	.setting-value {
 		font-variant-numeric: tabular-nums;
-		color: #6d28d9;
+		color: var(--axon-primary);
 		font-weight: 600;
 	}
 
 	.setting-range {
 		width: 100%;
-		accent-color: #6d28d9;
+		accent-color: var(--axon-primary);
 		cursor: pointer;
 	}
 
@@ -135,12 +135,12 @@
 		display: flex;
 		justify-content: space-between;
 		font-size: 0.6875rem;
-		color: #64748b;
+		color: var(--axon-text-tertiary);
 	}
 
 	.setting-help {
 		font-size: 0.75rem;
-		color: #64748b;
+		color: var(--axon-text-tertiary);
 		line-height: 1.4;
 		margin: 4px 0 0;
 	}

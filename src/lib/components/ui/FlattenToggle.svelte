@@ -25,17 +25,17 @@
 		transition:
 			background-color 0.15s ease,
 			color 0.15s ease;
-		color: #94a3b8;
+		color: var(--axon-text-secondary);
 		background-color: transparent;
 	}
 
 	.flatten-btn:hover:not(.active) {
-		color: #cbd5e1;
-		background-color: #1e293b;
+		color: var(--axon-text-subtle);
+		background-color: var(--axon-secondary);
 	}
 
 	.flatten-btn.active {
-		color: #f8fafc;
-		background-color: #6d28d9;
+		color: var(--axon-foreground);
+		background-color: var(--axon-primary);
 	}
 </style>

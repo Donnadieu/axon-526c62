@@ -76,13 +76,26 @@
 	.inspector-panel {
 		width: 0;
 		flex-shrink: 0;
-		background-color: #1e293b;
-		border-left: 1px solid #334155;
-		transition: width 0.2s ease;
+		background-color: var(--axon-secondary);
+		border-left: 1px solid var(--axon-muted);
+		transition: width 0.25s cubic-bezier(0.4, 0, 0.2, 1);
 		overflow: hidden;
 	}
 
 	.inspector-panel.open {
 		width: 320px;
+	}
+
+	.inspector-panel :global(.inspector) {
+		opacity: 0;
+		transform: translateX(16px);
+		transition:
+			opacity 0.2s ease 0.05s,
+			transform 0.2s ease 0.05s;
+	}
+
+	.inspector-panel.open :global(.inspector) {
+		opacity: 1;
+		transform: translateX(0);
 	}
 </style>

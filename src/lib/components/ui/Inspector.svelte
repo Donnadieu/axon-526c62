@@ -210,7 +210,7 @@
 		align-items: center;
 		justify-content: space-between;
 		padding: 12px 16px;
-		border-bottom: 1px solid #334155;
+		border-bottom: 1px solid var(--axon-muted);
 		flex-shrink: 0;
 	}
 
@@ -228,7 +228,7 @@
 		font-weight: 600;
 		text-transform: uppercase;
 		letter-spacing: 0.05em;
-		color: #94a3b8;
+		color: var(--axon-text-secondary);
 		margin-bottom: 4px;
 		display: block;
 	}
@@ -255,8 +255,8 @@
 	}
 
 	.metadata-card {
-		background-color: #0f172a;
-		border: 1px solid #334155;
+		background-color: var(--axon-background);
+		border: 1px solid var(--axon-muted);
 		border-radius: 8px;
 		padding: 12px;
 	}
@@ -270,13 +270,13 @@
 
 	.metadata-label {
 		font-size: 0.75rem;
-		color: #94a3b8;
+		color: var(--axon-text-secondary);
 	}
 
 	.metadata-value {
 		font-size: 0.875rem;
 		font-weight: 500;
-		color: #f8fafc;
+		color: var(--axon-foreground);
 	}
 
 	.action-buttons {

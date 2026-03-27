@@ -47,8 +47,8 @@
 		display: flex;
 		align-items: center;
 		padding: 0 16px;
-		background-color: #1e293b;
-		border-bottom: 1px solid #334155;
+		background-color: var(--axon-secondary);
+		border-bottom: 1px solid var(--axon-muted);
 		flex-shrink: 0;
 		position: relative;
 		z-index: 10;
@@ -66,7 +66,7 @@
 		font-family: 'Space Grotesk', sans-serif;
 		font-size: 1.125rem;
 		font-weight: 700;
-		color: #f8fafc;
+		color: var(--axon-foreground);
 	}
 
 	.toolbar-center {
@@ -86,7 +86,7 @@
 	.settings-btn {
 		background: none;
 		border: none;
-		color: #94a3b8;
+		color: var(--axon-text-secondary);
 		font-size: 1.25rem;
 		cursor: pointer;
 		padding: 4px 8px;
@@ -95,7 +95,7 @@
 	}
 
 	.settings-btn:hover {
-		color: #f8fafc;
-		background-color: #334155;
+		color: var(--axon-foreground);
+		background-color: var(--axon-muted);
 	}
 </style>
