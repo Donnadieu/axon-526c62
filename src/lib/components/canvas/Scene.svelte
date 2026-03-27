@@ -15,6 +15,12 @@
 	} from '$lib/stores/camera';
 	import type { OrbitControls as ThreeOrbitControls } from 'three/examples/jsm/controls/OrbitControls.js';
 	import type { PerspectiveCamera } from 'three';
+	import type { Snippet } from 'svelte';
+
+	interface Props {
+		children?: Snippet;
+	}
+	const { children }: Props = $props();
 
 	const { scene } = useThrelte();
 	scene.background = new THREE.Color('#0F172A');
@@ -66,3 +72,7 @@
 
 <T.AmbientLight intensity={0.5} />
 <T.DirectionalLight position={[10, 20, 10]} intensity={0.8} />
+
+{#if children}
+	{@render children()}
+{/if}

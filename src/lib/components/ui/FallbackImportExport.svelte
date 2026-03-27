@@ -36,11 +36,11 @@
 
 <div class="flex flex-col gap-3">
 	{#if $isDirty}
-		<div class="rounded-lg border border-red-500/50 bg-red-500/15 px-4 py-3 text-sm text-red-200">
+		<div class="alert-banner alert-danger">
 			You have unsaved changes! Export now to avoid losing your work.
 		</div>
 	{:else}
-		<div class="rounded-lg border border-amber-500/30 bg-amber-500/10 px-4 py-3 text-sm text-amber-200">
+		<div class="alert-banner alert-warning">
 			Your browser doesn't support direct file access. Changes are in-memory only — use Export to save.
 		</div>
 	{/if}
@@ -66,3 +66,24 @@
 		<p class="text-sm text-destructive">{error}</p>
 	{/if}
 </div>
+
+<style>
+	.alert-banner {
+		border-radius: 8px;
+		border-width: 1px;
+		padding: 12px 16px;
+		font-size: 0.875rem;
+	}
+
+	.alert-danger {
+		border-color: rgb(239 68 68 / 0.5);
+		background-color: rgb(239 68 68 / 0.15);
+		color: #fecaca;
+	}
+
+	.alert-warning {
+		border-color: rgb(245 158 11 / 0.3);
+		background-color: rgb(245 158 11 / 0.1);
+		color: #fde68a;
+	}
+</style>

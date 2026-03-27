@@ -16,7 +16,7 @@ function isValidRange(value: number, min: number, max: number): boolean {
 function parseMetadata(lines: string[]): Record<string, string> | null {
 	const metadata: Record<string, string> = {};
 	for (const line of lines) {
-		const match = line.match(/^(\w+):\s*(.+)$/);
+		const match = line.match(/^\s*(\w+):\s*(.+)$/);
 		if (match) {
 			metadata[match[1]] = match[2].trim();
 		}

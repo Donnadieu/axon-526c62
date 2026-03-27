@@ -1,5 +1,6 @@
 <script lang="ts">
 	import { T } from '@threlte/core';
+	import { DoubleSide } from 'three';
 	import type { IntersectionEvent } from '@threlte/extras';
 	import { clamp, todayYYMMDD } from '$lib/utils/staleness';
 	import { generateId } from '$lib/utils/id';
@@ -27,7 +28,7 @@
 	}
 </script>
 
-<T.Mesh position.x={5.5} position.y={5.5} position.z={0} onclick={handleClick}>
+<T.Mesh position.x={5.5} position.y={5.5} position.z={10} onclick={handleClick}>
 	<T.PlaneGeometry args={[10, 10]} />
-	<T.MeshBasicMaterial transparent opacity={0} />
+	<T.MeshBasicMaterial transparent opacity={0} side={DoubleSide} />
 </T.Mesh>

@@ -2,13 +2,26 @@
 @tailwind components;
 @tailwind utilities;
 
+:root {
+	--axon-primary: #6d28d9;
+	--axon-secondary: #1e293b;
+	--axon-accent: #f59e0b;
+	--axon-background: #0f172a;
+	--axon-foreground: #f8fafc;
+	--axon-muted: #334155;
+	--axon-destructive: #ef4444;
+	--axon-text-secondary: #94a3b8;
+	--axon-text-tertiary: #64748b;
+	--axon-text-subtle: #cbd5e1;
+}
+
 html,
 body {
 	height: 100%;
 	margin: 0;
 	padding: 0;
-	background-color: #0f172a;
-	color: #f8fafc;
+	background-color: var(--axon-background);
+	color: var(--axon-foreground);
 	font-family: 'Inter', sans-serif;
 }
 

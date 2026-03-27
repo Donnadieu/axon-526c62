@@ -52,7 +52,7 @@
 		width: 100%;
 		max-width: 400px;
 		border-radius: 8px;
-		background-color: #1e293b;
-		border: 1px solid #334155;
+		background-color: var(--axon-secondary);
+		border: 1px solid var(--axon-muted);
 	}
 </style>

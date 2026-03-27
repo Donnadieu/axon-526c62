@@ -217,4 +217,130 @@ status: pending
 
 		warnSpy.mockRestore();
 	});
+
+	it('handles leading whitespace on metadata lines (hand-edited markdown)', () => {
+		const md = `## Indented task
+  id: ind001
+  importance: 5
+  urgency: 3
+  created: 260326
+  status: open
+`;
+		const { tasks } = parseTasks(md);
+
+		expect(tasks).toHaveLength(1);
+		expect(tasks[0].id).toBe('ind001');
+		expect(tasks[0].importance).toBe(5);
+	});
+
+	it('handles tab-indented metadata lines', () => {
+		const md = `## Tab task
+\tid: tab001
+\timportance: 8
+\turgency: 4
+\tcreated: 260326
+\tstatus: open
+`;
+		const { tasks } = parseTasks(md);
+
+		expect(tasks).toHaveLength(1);
+		expect(tasks[0].id).toBe('tab001');
+	});
+
+	it('handles missing blank lines between tasks', () => {
+		const md = `## Task A
+id: a001
+importance: 5
+urgency: 3
+created: 260326
+status: open
+## Task B
+id: b001
+importance: 7
+urgency: 8
+created: 260326
+status: open
+`;
+		const { tasks } = parseTasks(md);
+
+		expect(tasks).toHaveLength(2);
+		expect(tasks[0].id).toBe('a001');
+		expect(tasks[1].id).toBe('b001');
+	});
+
+	it('handles extra blank lines and whitespace between sections', () => {
+		const md = `## Spaced task
+id: sp001
+importance: 5
+urgency: 3
+created: 260326
+status: open
+
+
+
+## Another spaced task
+id: sp002
+importance: 8
+urgency: 7
+created: 260326
+status: open
+`;
+		const { tasks } = parseTasks(md);
+
+		expect(tasks).toHaveLength(2);
+		expect(tasks[0].id).toBe('sp001');
+		expect(tasks[1].id).toBe('sp002');
+	});
+
+	it('handles extra whitespace around metadata values', () => {
+		const md = `## Padded values
+id:   pad001
+importance:   7
+urgency:   3
+created:   260326
+status:   open
+`;
+		const { tasks } = parseTasks(md);
+
+		expect(tasks).toHaveLength(1);
+		expect(tasks[0].id).toBe('pad001');
+		expect(tasks[0].importance).toBe(7);
+		expect(tasks[0].status).toBe('open');
+	});
+
+	it('handles mixed formatting quirks in a single file', () => {
+		const md = `# My Tasks
+
+Some preamble text
+
+## Normal task
+id: n001
+importance: 5
+urgency: 3
+created: 260326
+status: open
+## Indented task
+  id: n002
+  importance: 8
+  urgency: 7
+  created: 260326
+  status: open
+  fun: 4
+
+## Minimal task
+importance: 3
+urgency: 2
+created: 260326
+status: done
+`;
+		const { tasks, nonTaskContent } = parseTasks(md);
+
+		expect(tasks).toHaveLength(3);
+		expect(tasks[0].id).toBe('n001');
+		expect(tasks[1].id).toBe('n002');
+		expect(tasks[1].fun).toBe(4);
+		expect(tasks[2].status).toBe('done');
+		expect(tasks[2].id).toBeDefined(); // auto-generated
+		expect(nonTaskContent.length).toBeGreaterThan(0);
+	});
 });

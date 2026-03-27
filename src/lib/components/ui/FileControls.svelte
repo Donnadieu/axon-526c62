@@ -22,7 +22,7 @@
 
 	let { onFileLoaded, getContent, onSaveReady }: Props = $props();
 
-	let supported = $state(false);
+	let supported = $state<boolean | null>(null);
 	let fileName = $state('');
 	let currentHandle = $state<FileSystemFileHandle | null>(null);
 
@@ -36,20 +36,21 @@
 			if (result.ok) {
 				registerHandle(storedHandle);
 				onFileLoaded(result.value);
-				return;
 			}
-		}
-
-		const created = await createDefaultFile();
-		if (created.ok) {
-			registerHandle(created.value.handle);
-			storeHandle(created.value.handle);
-			onFileLoaded(created.value.content);
 		}
 	});
 
 	async function handleOpen() {
 		const result = await openFile();
+		if (result.ok) {
+			registerHandle(result.value.handle);
+			storeHandle(result.value.handle);
+			onFileLoaded(result.value.content);
+		}
+	}
+
+	async function handleNew() {
+		const result = await createDefaultFile();
 		if (result.ok) {
 			registerHandle(result.value.handle);
 			storeHandle(result.value.handle);
@@ -79,10 +80,16 @@
 		>
 			Open file
 		</button>
+		<button
+			class="btn variant-filled-primary rounded-md bg-primary px-4 py-2 text-sm font-medium text-white hover:bg-primary/80"
+			onclick={handleNew}
+		>
+			New file
+		</button>
 		{#if fileName}
 			<span class="text-sm text-muted">{fileName}</span>
 		{/if}
 	</div>
-{:else}
+{:else if supported === false}
 	<FallbackImportExport onImport={onFileLoaded} {getContent} />
 {/if}
